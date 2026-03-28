@@ -1193,4 +1193,17 @@ async function scheduled(event: ScheduledEvent, env: Bindings, ctx: ExecutionCon
 // EXPORT
 // ═══════════════════════════════════════════════════════════════
 
+
+app.onError((err, c) => {
+  if (err.message?.includes('JSON')) {
+    return c.json({ error: 'Invalid JSON body' }, 400);
+  }
+  console.error(`[echo-prometheus-surveillance] ${err.message}`);
+  return c.json({ error: 'Internal server error' }, 500);
+});
+
+app.notFound((c) => {
+  return c.json({ error: 'Not found' }, 404);
+});
+
 export default { fetch: app.fetch, scheduled };
