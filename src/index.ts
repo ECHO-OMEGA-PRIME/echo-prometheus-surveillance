@@ -228,6 +228,8 @@ async function analyzeMovementPatterns(db: D1Database, deviceId: string, ai: any
 // HEALTH & INIT
 // ═══════════════════════════════════════════════════════════════
 
+app.get("/", (c) => c.json({ service: 'echo-prometheus-surveillance', status: 'operational' }));
+
 app.get('/health', async (c) => {
   const db = c.env.DB;
   let dbStatus = 'unknown';
